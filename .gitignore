@@ -1,0 +1,5 @@
+*.g.i.cs
+.vs
+erpbutequinhowpf/obj
+erpbutequinhowpf/bin
+packages
