@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using erpbutequinhowpf.ViewModel;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace erpbutequinhowpf.views
 {
@@ -19,9 +9,25 @@ namespace erpbutequinhowpf.views
     /// </summary>
     public partial class CadastroCliente : Window
     {
+        private ClienteViewModel clienteViewModel;
+        private Cliente cliente;
+
         public CadastroCliente()
         {
             InitializeComponent();
+            clienteViewModel = new ClienteViewModel();
+            cliente = new Cliente();
+            DataContext = cliente;
+        }
+
+        private void SalvarCliente(object sender, RoutedEventArgs e)
+        {
+            clienteViewModel.SalvarCliente(cliente);
+        }
+
+        private void RemoverCliente(object sender, RoutedEventArgs e)
+        {
+            clienteViewModel.RemoverCliente(cliente);
         }
     }
 }
