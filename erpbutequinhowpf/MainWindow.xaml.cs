@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using erpbutequinhowpf.views.menu;
 
 namespace erpbutequinhowpf
 {
@@ -45,8 +46,8 @@ namespace erpbutequinhowpf
             switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
             {
                 case "ItemHome":
-                    //usc = new UserControlHome();
-                   // GridMain.Children.Add(usc);
+                    usc = new UserHomeControl();
+                    GridMain.Children.Add(usc);
                     break;
                 case "ItemCreate":
                    // usc = new UserControlCreate();
