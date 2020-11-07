@@ -99,6 +99,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Cliente_Model.cs" />
+    <Compile Include="Model\Funcionario_Model.cs" />
     <Compile Include="ViewModel\Cliente.cs" />
     <Compile Include="ViewModel\ClienteViewModel.cs" />
     <Compile Include="ViewModel\Funcionario.cs" />
@@ -161,9 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Conexao.cs" />
-    <Compile Include="Model\Insert.cs" />
-    <Compile Include="Model\To_Edit.cs" />
-    <Compile Include="Model\To_Locate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
