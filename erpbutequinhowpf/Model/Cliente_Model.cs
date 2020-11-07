@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace erpbutequinhowpf.Model
 {
-    class Cliente_Model:Conexao
+    class ClienteModel:Conexao
     {
        // Propriedades que receberão as informações inseridas pelo usuario e serão passada para dentro do banco
 
@@ -20,7 +20,7 @@ namespace erpbutequinhowpf.Model
         public string sql_select { get; set; }
         public string sql_mostrar { get; set; }
 
-        public Cliente_Model()
+        public ClienteModel()
         {
 
         }
