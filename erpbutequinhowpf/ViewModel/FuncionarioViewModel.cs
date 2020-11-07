@@ -1,5 +1,6 @@
 ﻿using erpbutequinhowpf.Model;
 using System;
+using System.Collections;
 
 namespace erpbutequinhowpf.ViewModel
 {
@@ -17,14 +18,19 @@ namespace erpbutequinhowpf.ViewModel
             this.funcionarioModel.Inserir(funcionario);
         }
 
+        internal ArrayList FindAll()
+        {
+           return funcionarioModel.FindAll();
+        }
+
         internal void RemoverFuncionario(Funcionario funcionario)
         {
             this.funcionarioModel.Delete(funcionario.Id);
         }
 
-        internal void ConsultarPorId(int codigo)
+        internal Funcionario ConsultarPorId(int codigo)
         {
-            throw new NotImplementedException();
+            return this.funcionarioModel.FindByID(codigo);
         }
     }
 

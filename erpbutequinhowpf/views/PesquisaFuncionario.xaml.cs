@@ -15,42 +15,35 @@ namespace erpbutequinhowpf.views
             InitializeComponent();
 
             funcionarioViewModel = new FuncionarioViewModel();
+            var funcionarios = funcionarioViewModel.FindAll();
 
-            dataGridFuncionario.ItemsSource = new[]
-            {
-                new FuncionarioGrid(1, "Flavio", "62 985410988", "003.419.211-57")
-            };
+            dataGridFuncionario.ItemsSource = funcionarios;
         }
 
         private void EditarFuncionarioClick(object sender, RoutedEventArgs e)
         {
-            FuncionarioGrid funcionarioSelecionado = (FuncionarioGrid)dataGridFuncionario.SelectedValue;
-            Console.WriteLine(funcionarioSelecionado.Codigo);
-            Close();
-            funcionarioViewModel.ConsultarPorId(funcionarioSelecionado.Codigo);
+            if(dataGridFuncionario.SelectedValue != null)
+            {
+                Funcionario funcionarioSelecionado;
+                try
+                {
+                    funcionarioSelecionado = (Funcionario)dataGridFuncionario.SelectedValue;
+                    Close();
+                    var funcionario = funcionarioViewModel.ConsultarPorId(funcionarioSelecionado.Id);
+                    var cadastroFuncionario = new CadastroFuncionario();
+                    cadastroFuncionario.Funcionario = funcionario;
+                    cadastroFuncionario.EditarFuncionario();
+                    cadastroFuncionario.Show();
+                }
+                catch (InvalidCastException ex)
+                {
+                    MessageBox.Show("Selecione um registro válido");
+                }
+                               
+            }            
 
         }
 
     }
-
-    public class FuncionarioGrid
-    {
-        private int codigo;
-        private string nome;
-        private string telefone;
-        private string cpf;
-
-        public FuncionarioGrid(int codigo, string nome, string telefone, string cpf)
-        {
-            Codigo = codigo;
-            Nome = nome;
-            Telefone = telefone;
-            Cpf = cpf;
-        }
-
-        public int Codigo { get => codigo; set => codigo = value; }
-        public string Nome { get => nome; set => nome = value; }
-        public string Telefone { get => telefone; set => telefone = value; }
-        public string Cpf { get => cpf; set => cpf = value; }
-    }
+      
 }

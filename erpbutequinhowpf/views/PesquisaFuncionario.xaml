@@ -29,7 +29,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Binding="{Binding Codigo, Mode = OneWay}" Header="Código do cliente"/>
+                    <DataGridTextColumn Binding="{Binding Id, Mode = OneWay}" Header="Código do cliente"/>
                     <DataGridTextColumn Binding="{Binding Nome, Mode = OneWay}" Header="Nome do cliente"/>
                     <DataGridTextColumn Binding="{Binding Cpf, Mode = OneWay}" Header="CPF"/>
                     <DataGridTextColumn Binding="{Binding Telefone, Mode = OneWay}" Header="Telefone"/>
