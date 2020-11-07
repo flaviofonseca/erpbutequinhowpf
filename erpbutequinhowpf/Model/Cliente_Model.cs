@@ -5,28 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using erpbutequinhowpf.ViewModel;
 using MySql.Data.MySqlClient;
 
 namespace erpbutequinhowpf.Model
 {
     class Cliente_Model:Conexao
     {
-        // Propriedades que receberão as informações inseridas pelo usuario e serão passada para dentro do banco
-
-        public int idcliente { get; set; }
-        public string nome { get; set; }
-        public string cpf { get; set; }
-        public string cnpj { get; set; }
-        public string telefone { get; set; }
-        public string logradouro { get; set; }
-        public string numero { get; set; }
-        public string complemento { get; set; }
-        public string bairro { get; set; }
-        public string cep { get; set; }
-        public string cidade { get; set; }
-        public string estado { get; set; }
-
-        // Propriedades que irão conter comandos a serem executados dentro do banco 
+       // Propriedades que receberão as informações inseridas pelo usuario e serão passada para dentro do banco
 
         public string sql_insert { get; set; }
         public string sql_update { get; set; }
@@ -39,103 +25,76 @@ namespace erpbutequinhowpf.Model
 
         }
 
-        public Cliente_Model(int idcliente, string nome, string cpf, string cnpj, string telefone, string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado)
-        {
-            this.idcliente = idcliente;
-            this.nome = nome;
-            this.cpf = cpf;
-            this.cnpj = cnpj;
-            this.telefone = telefone;
-            this.logradouro = logradouro;
-            this.numero = numero;
-            this.complemento = complemento;
-            this.bairro = bairro;
-            this.cep = cep;
-            this.cidade = cidade;
-            this.estado = estado;
-        }
-
         // Metodo Inserte ira realizar a inserção ods valores recebido pelo o usuario 
 
-        protected void Inserir()
+        public void Inserir(Cliente cliente)
         {
             try
             {
-                string bloqueio = "SELECT cpf FROM cliente WHERE cpf = @cpf";
+                string bloqueio = "SELECT count(id) FROM funcionario WHERE cpf = @cpf";
 
-                
-
-                if (cpf != bloqueio) // Verificar se não existe um cpf igual 
+                if (cliente.CpfOuCnpj != bloqueio) // Verificar se não existe um cpf igual 
                 {
 
-                    sql_insert = "insert into cliente (idcliente, nome, cpf, cnpj, telefone, logradouro, numero, cidade, estado, bairro, cep, complemento) values (@idcliente, @nome, @cpf, @cnpj, @telefone, @logradouro, @numero, @cidade, @estado, @bairro, @cep, @complemento)";
+                    sql_insert = "insert into funcionario (nome, cpf_cnpj, telefone, logradouro, numero, cidade, " +
+                        "estado, bairro, cep, complemento) values (@nome, @cpf," +
+                        "@telefone, @logradouro, @numero, @cidade, @estado, @bairro, @cep, @complemento)";
 
                     comando = new MySqlCommand(sql_insert, Conexao_Banco());
 
-                    comando.Parameters.AddWithValue("@idcliente", null);
+                    comando.Parameters.AddWithValue("@nome", cliente.Nome);
 
-                    comando.Parameters.AddWithValue("@nome", nome);
-
-                    if (cpf.Length == 11)
+                    if (cliente?.CpfOuCnpj.Length == 11)
                     { //definindo a quantidade minima de caracteres 
-                        comando.Parameters.AddWithValue("@cpf", cpf);
+                        comando.Parameters.AddWithValue("@cpf", cliente.CpfOuCnpj);
                     }
                     else
                     {
                         MessageBox.Show("Quantidade de caracteres do CPF invalido");
                     }
 
-                    if (cnpj.Length == 14)
+                   if (cliente?.Telefone?.Length == 11)
                     {
-                        comando.Parameters.AddWithValue("@cnpj", cnpj);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Quantidade de caracteres do CNPJ invalido");
-                    }
-
-                    if (telefone.Length == 11)
-                    {
-                        comando.Parameters.AddWithValue("@telefone", telefone);
+                        comando.Parameters.AddWithValue("@telefone", cliente.Telefone);
                     }
                     else
                     {
                         MessageBox.Show("Quantidade de caracteres do Telefone invalido");
                     }
 
-                    comando.Parameters.AddWithValue("@logradouro", logradouro);
+                    comando.Parameters.AddWithValue("@logradouro", cliente?.Logradouro);
 
-                    if (numero.Length >= 1)
+                    if (cliente?.Numero?.Length >= 1)
                     {
-                        comando.Parameters.AddWithValue("@numero", numero);
+                        comando.Parameters.AddWithValue("@numero", cliente?.Numero);
                     }
                     else
                     {
                         MessageBox.Show("Numero da residencia abaixo do permitido");
                     }
 
-                    comando.Parameters.AddWithValue("@cidade", cidade);
+                    comando.Parameters.AddWithValue("@cidade", cliente?.Cidade);
 
-                    if (estado.Length == 2)
+                    if (cliente?.Estado?.Length == 2)
                     {
-                        comando.Parameters.AddWithValue("@estado", estado);
+                        comando.Parameters.AddWithValue("@estado", cliente.Estado);
                     }
                     else
                     {
                         MessageBox.Show("Quantidade de caracteres do Estado (UF) invalido");
                     }
-                    comando.Parameters.AddWithValue("@bairro", bairro);
+                    comando.Parameters.AddWithValue("@bairro", cliente?.Bairro);
 
-                    if (cep.Length == 8)
+                    if (cliente?.Cep?.Length == 8)
                     {
-                        comando.Parameters.AddWithValue("@cep", cep);
+                        comando.Parameters.AddWithValue("@cep", cliente?.Cep);
                     }
                     else
                     {
                         MessageBox.Show("Quantidade de caracteres do CEP invalido");
                     }
 
-                    comando.Parameters.AddWithValue("@complemento", complemento);
+                    comando.Parameters.AddWithValue("@complemento", cliente?.Complemento);
 
                     connection.Open();
                     comando.ExecuteNonQuery();
@@ -159,27 +118,29 @@ namespace erpbutequinhowpf.Model
 
         // Metodo Update e Delete fazem parte da funcionalidade da opção editar 
 
-        protected void Update()
+        public void Update(Cliente cliente)
         {
             try
             {
 
-                sql_update = "UPDATE cliente SET nome = @nome, cpf = @cpf, cnpj = @cnpj, telefone = @telefone, logradouro = @logradouro, numero = @numero, cidade = @cidade, estado = @estado, bairro = @bairro, cep = @cep, complemento = @complemento WHERE idcliente = @idcliente ";
+                sql_update = "UPDATE funcionario SET nome = @nome, cpf_cnpj = @cpf, " +
+                    "telefone = @telefone, logradouro = @logradouro, numero = @numero, " +
+                    "cidade = @cidade, estado = @estado, bairro = @bairro, cep = @cep, " +
+                    "complemento = @complemento WHERE id = @idfuncionario ";
 
                 comando = new MySqlCommand(sql_update, Conexao_Banco());
 
-                comando.Parameters.AddWithValue("@idcliente",idcliente);
-                comando.Parameters.AddWithValue("@nome", nome);
-                comando.Parameters.AddWithValue("@cpf", cpf);
-                comando.Parameters.AddWithValue("@cnpj", cnpj);
-                comando.Parameters.AddWithValue("@telefone", telefone);
-                comando.Parameters.AddWithValue("@logradouro", logradouro);
-                comando.Parameters.AddWithValue("@numero", numero);
-                comando.Parameters.AddWithValue("@cidade", cidade);
-                comando.Parameters.AddWithValue("@estado", estado);
-                comando.Parameters.AddWithValue("@bairro", bairro);
-                comando.Parameters.AddWithValue("@cep", cep);
-                comando.Parameters.AddWithValue("@complemento", complemento);
+                comando.Parameters.AddWithValue("@idfuncionario", cliente.Id);
+                comando.Parameters.AddWithValue("@nome", cliente.Nome);
+                comando.Parameters.AddWithValue("@cpf", cliente.CpfOuCnpj);
+                comando.Parameters.AddWithValue("@telefone", cliente.Telefone);
+                comando.Parameters.AddWithValue("@logradouro", cliente.Logradouro);
+                comando.Parameters.AddWithValue("@numero", cliente.Numero);
+                comando.Parameters.AddWithValue("@cidade", cliente.Cidade);
+                comando.Parameters.AddWithValue("@estado", cliente.Estado);
+                comando.Parameters.AddWithValue("@bairro", cliente.Bairro);
+                comando.Parameters.AddWithValue("@cep", cliente.Cep);
+                comando.Parameters.AddWithValue("@complemento", cliente.Complemento);
 
                 connection.Open();
                 comando.ExecuteNonQuery();
@@ -196,18 +157,18 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        protected void Delete()
+        public void Delete(int idfuncionario)
         {
             try
             {
                 Conexao cn = new Conexao();
 
 
-                sql_delete = "DELETE FROM cliente WHERE idcliente = @idcliente ";
+                sql_delete = "DELETE FROM funcionario WHERE id = @idfuncionario ";
 
                 cn.comando = new MySqlCommand(sql_delete, Conexao_Banco());
 
-                cn.comando.Parameters.AddWithValue("@idcliente", idcliente);
+                cn.comando.Parameters.AddWithValue("@idfuncionario", idfuncionario);
 
                 connection.Open();
                 cn.comando.ExecuteNonQuery();
@@ -224,14 +185,47 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        protected void Localizar()
+        public void FindByID(int id)
         {
             try
             {
                 Conexao cn = new Conexao();
 
 
-                sql_select = "SELECT * FROM cliente WHERE nome = @nome ";
+                sql_select = "SELECT * FROM funcionario WHERE id = @id ";
+
+                cn.comando = new MySqlCommand(sql_select, Conexao_Banco());
+
+                cn.comando.Parameters.AddWithValue("@id", id);
+
+                connection.Open();
+                dr = comando.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Console.WriteLine(String.Format("{0}", dr[0]));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection = null;
+                comando = null;
+            }
+        }
+
+        protected void FindByNome(string nome)
+        {
+            try
+            {
+                Conexao cn = new Conexao();
+
+
+                sql_select = "SELECT * FROM funcionario WHERE nome = @nome ";
 
                 cn.comando = new MySqlCommand(sql_select, Conexao_Banco());
 
@@ -252,14 +246,14 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        protected void Mostrar_Tabela()
+        protected void FindAll()
         {
             try
             {
                 Conexao cn = new Conexao();
 
 
-                sql_mostrar = "SELECT * FROM cliente ";
+                sql_mostrar = "SELECT * FROM funcionario ";
 
                 da = new MySqlDataAdapter(sql_mostrar, Conexao_Banco());
 
