@@ -115,6 +115,15 @@
     <Compile Include="views\menu\UserHomeControl.xaml.cs">
       <DependentUpon>UserHomeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\menu\UserPesquisaControl.xaml.cs">
+      <DependentUpon>UserPesquisaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\PesquisaCliente.xaml.cs">
+      <DependentUpon>PesquisaCliente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\PesquisaFuncionario.xaml.cs">
+      <DependentUpon>PesquisaFuncionario.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -136,6 +145,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\menu\UserHomeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\menu\UserPesquisaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\PesquisaCliente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\PesquisaFuncionario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

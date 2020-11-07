@@ -1,0 +1,40 @@
+﻿<Window x:Class="erpbutequinhowpf.views.PesquisaFuncionario"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:erpbutequinhowpf.views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="PesquisaFuncionario" Height="450" Width="800">
+    <Grid>
+        <StackPanel/>
+        <StackPanel>
+            <DataGrid Name="dataGridFuncionario"
+                  HorizontalAlignment="Right"
+                  Height="330"
+                  Margin="0,51,25,0" 
+                  VerticalAlignment="Top" 
+                  Width="738"
+                  SelectionMode="Single"
+                  CanUserResizeRows="True"
+                  AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="...">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button BorderThickness="0" Click="EditarFuncionarioClick">
+                                    <materialDesign:PackIcon Kind="Pencil" Width="15"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Codigo, Mode = OneWay}" Header="Código do cliente"/>
+                    <DataGridTextColumn Binding="{Binding Nome, Mode = OneWay}" Header="Nome do cliente"/>
+                    <DataGridTextColumn Binding="{Binding Cpf, Mode = OneWay}" Header="CPF"/>
+                    <DataGridTextColumn Binding="{Binding Telefone, Mode = OneWay}" Header="Telefone"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>
