@@ -42,7 +42,7 @@ namespace erpbutequinhowpf
                     GridMain.Children.Add(usc);
                     break;
                 case "ItemPesquisa":
-                   // usc = new UserPesquisaControl();
+                    usc = new UserPesquisaControl();
                     GridMain.Children.Add(usc);
                     break;
                 default:
