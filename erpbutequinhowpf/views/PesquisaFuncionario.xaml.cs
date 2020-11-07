@@ -27,7 +27,7 @@ namespace erpbutequinhowpf.views
             FuncionarioGrid funcionarioSelecionado = (FuncionarioGrid)dataGridFuncionario.SelectedValue;
             Console.WriteLine(funcionarioSelecionado.Codigo);
             Close();
-            funcionarioViewModel.ConsultarPorId(funcionarioSelecionado.Codigo);
+            var funcionario = funcionarioViewModel.ConsultarPorId(funcionarioSelecionado.Codigo);
 
         }
 

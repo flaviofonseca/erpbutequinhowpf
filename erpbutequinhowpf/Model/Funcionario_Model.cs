@@ -181,7 +181,7 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        public void FindByID(int id)
+        public Funcionario FindByID(int id)
         {
             try
             {
@@ -212,6 +212,8 @@ namespace erpbutequinhowpf.Model
                 connection = null;
                 comando = null;
             }
+
+            return null;
         }
 
         protected void FindByNome(string nome)
