@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 
 namespace erpbutequinhowpf.Model
 {
@@ -17,7 +12,7 @@ namespace erpbutequinhowpf.Model
 
         protected MySqlConnection Conexao_Banco()
         {
-            connection = new MySqlConnection("Server=localhost;Database=cadastro_cliente;Uid=root;Pwd=kekinho13;");
+            connection = new MySqlConnection("Server=localhost;Database=butequinho;Uid=root;Pwd=flavio;");
             return connection;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using erpbutequinhowpf.Model;
 using System;
+using System.Collections;
 
 namespace erpbutequinhowpf.ViewModel
 {
@@ -15,6 +16,11 @@ namespace erpbutequinhowpf.ViewModel
         internal void SalvarFuncionario(Funcionario funcionario)
         {
             this.funcionarioModel.Inserir(funcionario);
+        }
+
+        internal ArrayList FindAll()
+        {
+           return funcionarioModel.FindAll();
         }
 
         internal void RemoverFuncionario(Funcionario funcionario)

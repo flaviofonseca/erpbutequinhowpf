@@ -11,6 +11,7 @@ namespace erpbutequinhowpf.views
     {
         private ClienteViewModel clienteViewModel;
         private Cliente cliente;
+        internal Cliente Cliente { get => cliente; set => cliente = value; }
 
         public CadastroCliente()
         {
@@ -23,6 +24,11 @@ namespace erpbutequinhowpf.views
         private void SalvarCliente(object sender, RoutedEventArgs e)
         {
             clienteViewModel.SalvarCliente(cliente);
+        }
+
+        internal void EditarCliente()
+        {
+            DataContext = cliente;
         }
 
         private void RemoverCliente(object sender, RoutedEventArgs e)

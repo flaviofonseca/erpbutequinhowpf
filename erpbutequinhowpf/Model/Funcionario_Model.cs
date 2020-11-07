@@ -1,6 +1,8 @@
 ﻿using erpbutequinhowpf.ViewModel;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows;
 
@@ -183,6 +185,7 @@ namespace erpbutequinhowpf.Model
 
         public Funcionario FindByID(int id)
         {
+            Funcionario funcionario = new Funcionario();
             try
             {
                 Conexao cn = new Conexao();
@@ -195,11 +198,21 @@ namespace erpbutequinhowpf.Model
                 cn.comando.Parameters.AddWithValue("@id", id);
 
                 connection.Open();
-                dr = comando.ExecuteReader();
+                dr = cn.comando.ExecuteReader();
 
                 while (dr.Read())
                 {
-                    Console.WriteLine(String.Format("{0}", dr[0]));
+                    funcionario.Id = dr.GetInt32("id");
+                    funcionario.Nome = dr.GetString("nome");
+                    funcionario.CpfOuCnpj = dr.GetString("cpf_cnpj");
+                    funcionario.Telefone = dr.GetString("telefone");
+                    funcionario.Logradouro = dr.GetString("logradouro");
+                    funcionario.Numero = dr.GetString("numero");
+                    funcionario.Complemento = dr.GetString("complemento");
+                    funcionario.Bairro = dr.GetString("bairro");
+                    funcionario.Cep = dr.GetString("cep");
+                    funcionario.Cidade = dr.GetString("cidade");
+                    funcionario.Estado = dr.GetString("estado");
                 }
             }
             catch (Exception ex)
@@ -213,7 +226,7 @@ namespace erpbutequinhowpf.Model
                 comando = null;
             }
 
-            return null;
+            return funcionario;
         }
 
         protected void FindByNome(string nome)
@@ -244,22 +257,38 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        protected void FindAll()
+        public ArrayList FindAll()
         {
+            ArrayList funcionarios = new ArrayList();
             try
             {
                 Conexao cn = new Conexao();
 
 
-                sql_mostrar = "SELECT * FROM funcionario ";
+                sql_select = "SELECT * FROM funcionario ";
 
-                da = new MySqlDataAdapter(sql_mostrar, Conexao_Banco());
+                cn.comando = new MySqlCommand(sql_select, Conexao_Banco());
+                                
+                connection.Open();
+                dr = cn.comando.ExecuteReader();
 
-                DataTable dt = new DataTable();
+                while (dr.Read())
+                {
+                    Funcionario funcionario = new Funcionario();
+                    funcionario.Id = dr.GetInt32("id");
+                    funcionario.Nome = dr.GetString("nome");
+                    funcionario.CpfOuCnpj = dr.GetString("cpf_cnpj");
+                    funcionario.Telefone = dr.GetString("telefone");
+                    funcionario.Logradouro = dr.GetString("logradouro");
+                    funcionario.Numero = dr.GetString("numero");
+                    funcionario.Complemento = dr.GetString("complemento");
+                    funcionario.Bairro = dr.GetString("bairro");
+                    funcionario.Cep = dr.GetString("cep");
+                    funcionario.Cidade = dr.GetString("cidade");
+                    funcionario.Estado = dr.GetString("estado");
 
-                da.Fill(dt);
-
-
+                    funcionarios.Add(funcionario);
+                }
             }
             catch (Exception ex)
             {
@@ -271,6 +300,8 @@ namespace erpbutequinhowpf.Model
                 connection = null;
                 comando = null;
             }
+
+            return funcionarios;
         }
     }
 }

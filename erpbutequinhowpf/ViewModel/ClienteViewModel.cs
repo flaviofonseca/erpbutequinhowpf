@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace erpbutequinhowpf.ViewModel
 {
@@ -21,6 +22,14 @@ namespace erpbutequinhowpf.ViewModel
             throw new NotImplementedException();
         }
 
+        internal ArrayList FindAll()
+        {
+            throw new NotImplementedException();
+        }
 
+        internal Cliente ConsultarPorId(int codigo)
+        {
+            return null;
+        }
     }
 }
