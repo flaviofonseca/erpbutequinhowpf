@@ -31,12 +31,12 @@ namespace erpbutequinhowpf.Model
         {
             try
             {
-                string bloqueio = "SELECT count(id) FROM funcionario WHERE cpf = @cpf";
+                string bloqueio = "SELECT count(id) FROM cliente WHERE cpf = @cpf";
 
                 if (cliente.CpfOuCnpj != bloqueio) // Verificar se não existe um cpf igual 
                 {
 
-                    sql_insert = "insert into funcionario (nome, cpf_cnpj, telefone, logradouro, numero, cidade, " +
+                    sql_insert = "insert into cliente (nome, cpf_cnpj, telefone, logradouro, numero, cidade, " +
                         "estado, bairro, cep, complemento) values (@nome, @cpf," +
                         "@telefone, @logradouro, @numero, @cidade, @estado, @bairro, @cep, @complemento)";
 
@@ -123,14 +123,14 @@ namespace erpbutequinhowpf.Model
             try
             {
 
-                sql_update = "UPDATE funcionario SET nome = @nome, cpf_cnpj = @cpf, " +
+                sql_update = "UPDATE cliente SET nome = @nome, cpf_cnpj = @cpf, " +
                     "telefone = @telefone, logradouro = @logradouro, numero = @numero, " +
                     "cidade = @cidade, estado = @estado, bairro = @bairro, cep = @cep, " +
-                    "complemento = @complemento WHERE id = @idfuncionario ";
+                    "complemento = @complemento WHERE id = @idcliente ";
 
                 comando = new MySqlCommand(sql_update, Conexao_Banco());
 
-                comando.Parameters.AddWithValue("@idfuncionario", cliente.Id);
+                comando.Parameters.AddWithValue("@idcliente", cliente.Id);
                 comando.Parameters.AddWithValue("@nome", cliente.Nome);
                 comando.Parameters.AddWithValue("@cpf", cliente.CpfOuCnpj);
                 comando.Parameters.AddWithValue("@telefone", cliente.Telefone);
@@ -157,18 +157,18 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        public void Delete(int idfuncionario)
+        public void Delete(int idcliente)
         {
             try
             {
                 Conexao cn = new Conexao();
 
 
-                sql_delete = "DELETE FROM funcionario WHERE id = @idfuncionario ";
+                sql_delete = "DELETE FROM cliente WHERE id = @idcliente ";
 
                 cn.comando = new MySqlCommand(sql_delete, Conexao_Banco());
 
-                cn.comando.Parameters.AddWithValue("@idfuncionario", idfuncionario);
+                cn.comando.Parameters.AddWithValue("@idcliente", idcliente);
 
                 connection.Open();
                 cn.comando.ExecuteNonQuery();
@@ -192,7 +192,7 @@ namespace erpbutequinhowpf.Model
                 Conexao cn = new Conexao();
 
 
-                sql_select = "SELECT * FROM funcionario WHERE id = @id ";
+                sql_select = "SELECT * FROM cliente WHERE id = @id ";
 
                 cn.comando = new MySqlCommand(sql_select, Conexao_Banco());
 
@@ -225,7 +225,7 @@ namespace erpbutequinhowpf.Model
                 Conexao cn = new Conexao();
 
 
-                sql_select = "SELECT * FROM funcionario WHERE nome = @nome ";
+                sql_select = "SELECT * FROM cliente WHERE nome = @nome ";
 
                 cn.comando = new MySqlCommand(sql_select, Conexao_Banco());
 
@@ -253,7 +253,7 @@ namespace erpbutequinhowpf.Model
                 Conexao cn = new Conexao();
 
 
-                sql_mostrar = "SELECT * FROM funcionario ";
+                sql_mostrar = "SELECT * FROM cliente ";
 
                 da = new MySqlDataAdapter(sql_mostrar, Conexao_Banco());
 
