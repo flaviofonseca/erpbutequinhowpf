@@ -31,7 +31,7 @@ namespace erpbutequinhowpf.Model
         {
             try
             {
-                string bloqueio = "SELECT count(id) FROM cliente WHERE cpf = @cpf";
+                string bloqueio = "SELECT count(id) FROM cliente WHERE cpf_cnpj = @cpf";
 
                 if (cliente.CpfOuCnpj != bloqueio) // Verificar se não existe um cpf igual 
                 {
@@ -126,7 +126,7 @@ namespace erpbutequinhowpf.Model
                 sql_update = "UPDATE cliente SET nome = @nome, cpf_cnpj = @cpf, " +
                     "telefone = @telefone, logradouro = @logradouro, numero = @numero, " +
                     "cidade = @cidade, estado = @estado, bairro = @bairro, cep = @cep, " +
-                    "complemento = @complemento WHERE id = @idcliente ";
+                    "complemento = @complemento WHERE idcliente = @idcliente ";
 
                 comando = new MySqlCommand(sql_update, Conexao_Banco());
 
@@ -164,7 +164,7 @@ namespace erpbutequinhowpf.Model
                 Conexao cn = new Conexao();
 
 
-                sql_delete = "DELETE FROM cliente WHERE id = @idcliente ";
+                sql_delete = "DELETE FROM cliente WHERE idcliente = @idcliente ";
 
                 cn.comando = new MySqlCommand(sql_delete, Conexao_Banco());
 
@@ -192,7 +192,7 @@ namespace erpbutequinhowpf.Model
                 Conexao cn = new Conexao();
 
 
-                sql_select = "SELECT * FROM cliente WHERE id = @id ";
+                sql_select = "SELECT * FROM cliente WHERE idcliente = @id ";
 
                 cn.comando = new MySqlCommand(sql_select, Conexao_Banco());
 

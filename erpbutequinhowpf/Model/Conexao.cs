@@ -12,7 +12,7 @@ namespace erpbutequinhowpf.Model
 
         protected MySqlConnection Conexao_Banco()
         {
-            connection = new MySqlConnection("Server=localhost;Database=butequinho;Uid=root;Pwd=flavio;");
+            connection = new MySqlConnection("Server=localhost;Database=cadastro_cliente;Uid=root;Pwd=kekinho13;");
             return connection;
         }
     }
