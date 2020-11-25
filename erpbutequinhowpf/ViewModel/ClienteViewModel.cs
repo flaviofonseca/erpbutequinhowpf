@@ -1,35 +1,38 @@
-﻿using System;
+﻿using erpbutequinhowpf.Model;
+using System;
 using System.Collections;
 
 namespace erpbutequinhowpf.ViewModel
 {
-    [System.Serializable]
-    internal class ClienteViewModel
+    
+    class ClienteViewModel
     {
-        
-        public ClienteViewModel()
-        {           
+        private ClienteModel clienteModel;
 
+        public ClienteViewModel()
+        {
+            this.clienteModel = new ClienteModel();
         }
 
         internal void SalvarCliente(Cliente cliente)
         {
-            throw new NotImplementedException();
-        }
-
-        internal void RemoverCliente(Cliente cliente)
-        {
-            throw new NotImplementedException();
+            this.clienteModel.Inserir(cliente);
         }
 
         internal ArrayList FindAll()
         {
-            throw new NotImplementedException();
+            return clienteModel.FindAll();
+        }
+
+        internal void RemoverCliente(Cliente cliente)
+        {
+            this.clienteModel.Delete(cliente.Id);
         }
 
         internal Cliente ConsultarPorId(int codigo)
         {
-            return null;
+            return this.clienteModel.FindByID(codigo);
         }
     }
 }
+

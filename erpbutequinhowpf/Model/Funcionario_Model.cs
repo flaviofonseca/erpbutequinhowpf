@@ -155,18 +155,18 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        public void Delete(int idfuncionario)
+        public void Delete(int id)
         {
             try
             {
                 Conexao cn = new Conexao();
 
 
-                sql_delete = "DELETE FROM funcionario WHERE idfuncionario = @idfuncionario ";
+                sql_delete = "DELETE FROM funcionario WHERE idfuncionario = @id ";
 
                 cn.comando = new MySqlCommand(sql_delete, Conexao_Banco());
 
-                cn.comando.Parameters.AddWithValue("@idfuncionario", idfuncionario);
+                cn.comando.Parameters.AddWithValue("@id", id);
 
                 connection.Open();
                 cn.comando.ExecuteNonQuery();
@@ -202,7 +202,7 @@ namespace erpbutequinhowpf.Model
 
                 while (dr.Read())
                 {
-                    funcionario.Id = dr.GetInt32("id");
+                    funcionario.Id = dr.GetInt32("idfuncionario");
                     funcionario.Nome = dr.GetString("nome");
                     funcionario.CpfOuCnpj = dr.GetString("cpf_cnpj");
                     funcionario.Telefone = dr.GetString("telefone");
@@ -275,7 +275,7 @@ namespace erpbutequinhowpf.Model
                 while (dr.Read())
                 {
                     Funcionario funcionario = new Funcionario();
-                    funcionario.Id = dr.GetInt32("id");
+                    funcionario.Id = dr.GetInt32("idfuncionario");
                     funcionario.Nome = dr.GetString("nome");
                     funcionario.CpfOuCnpj = dr.GetString("cpf_cnpj");
                     funcionario.Telefone = dr.GetString("telefone");

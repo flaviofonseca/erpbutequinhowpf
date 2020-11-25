@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -157,18 +158,18 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        public void Delete(int idcliente)
+        public void Delete(int id)
         {
             try
             {
                 Conexao cn = new Conexao();
 
 
-                sql_delete = "DELETE FROM cliente WHERE idcliente = @idcliente ";
+                sql_delete = "DELETE FROM cliente WHERE idcliente = @id";
 
                 cn.comando = new MySqlCommand(sql_delete, Conexao_Banco());
 
-                cn.comando.Parameters.AddWithValue("@idcliente", idcliente);
+                cn.comando.Parameters.AddWithValue("@id", id);
 
                 connection.Open();
                 cn.comando.ExecuteNonQuery();
@@ -185,8 +186,9 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        public void FindByID(int id)
+        public Cliente FindByID(int id)
         {
+            Cliente cliente = new Cliente();
             try
             {
                 Conexao cn = new Conexao();
@@ -203,7 +205,17 @@ namespace erpbutequinhowpf.Model
 
                 while (dr.Read())
                 {
-                    Console.WriteLine(String.Format("{0}", dr[0]));
+                    cliente.Id = dr.GetInt32("idcliente");
+                    cliente.Nome = dr.GetString("nome");
+                    cliente.CpfOuCnpj = dr.GetString("cpf_cnpj");
+                    cliente.Telefone = dr.GetString("telefone");
+                    cliente.Logradouro = dr.GetString("logradouro");
+                    cliente.Numero = dr.GetString("numero");
+                    cliente.Complemento = dr.GetString("complemento");
+                    cliente.Bairro = dr.GetString("bairro");
+                    cliente.Cep = dr.GetString("cep");
+                    cliente.Cidade = dr.GetString("cidade");
+                    cliente.Estado = dr.GetString("estado");
                 }
             }
             catch (Exception ex)
@@ -216,6 +228,9 @@ namespace erpbutequinhowpf.Model
                 connection = null;
                 comando = null;
             }
+
+            return cliente;
+
         }
 
         protected void FindByNome(string nome)
@@ -246,22 +261,38 @@ namespace erpbutequinhowpf.Model
             }
         }
 
-        protected void FindAll()
+        public ArrayList FindAll()
         {
+            ArrayList clientes = new ArrayList();
             try
             {
                 Conexao cn = new Conexao();
 
 
-                sql_mostrar = "SELECT * FROM cliente ";
+                sql_select = "SELECT * FROM cliente ";
 
-                da = new MySqlDataAdapter(sql_mostrar, Conexao_Banco());
+                cn.comando = new MySqlCommand(sql_select, Conexao_Banco());
 
-                DataTable dt = new DataTable();
+                connection.Open();
+                dr = cn.comando.ExecuteReader();
 
-                da.Fill(dt);
+                while (dr.Read())
+                {
+                    Cliente cliente = new Cliente();
+                    cliente.Id = dr.GetInt32("idcliente");
+                    cliente.Nome = dr.GetString("nome");
+                    cliente.CpfOuCnpj = dr.GetString("cpf_cnpj");
+                    cliente.Telefone = dr.GetString("telefone");
+                    cliente.Logradouro = dr.GetString("logradouro");
+                    cliente.Numero = dr.GetString("numero");
+                    cliente.Complemento = dr.GetString("complemento");
+                    cliente.Bairro = dr.GetString("bairro");
+                    cliente.Cep = dr.GetString("cep");
+                    cliente.Cidade = dr.GetString("cidade");
+                    cliente.Estado = dr.GetString("estado");
 
-
+                    clientes.Add(cliente);
+                }
             }
             catch (Exception ex)
             {
@@ -273,6 +304,10 @@ namespace erpbutequinhowpf.Model
                 connection = null;
                 comando = null;
             }
+
+            return clientes;
         }
     }
 }
+
+
